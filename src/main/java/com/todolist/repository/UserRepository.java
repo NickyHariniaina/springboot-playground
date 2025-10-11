@@ -10,6 +10,4 @@ import com.todolist.model.UserModel;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Integer> {
-  UserModel findByUsername(String username);
-  UserModel findByEmail(String email);
 }

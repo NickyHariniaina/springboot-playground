@@ -39,11 +39,4 @@ public class UserService {
     userRepository.deleteById(id);
   }
 
-  public Optional<UserModel> getUserByUsername(String username) {
-    return Optional.ofNullable(userRepository.findByUsername(username));
-  }
-
-  public Optional<UserModel> getUserByEmail(String email) {
-    return Optional.ofNullable(userRepository.findByEmail(email));
-  }
 }

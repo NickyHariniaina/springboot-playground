@@ -1,19 +1,24 @@
 package com.todolist.model;
 
+import java.time.LocalDateTime;
+
+import com.todolist.model.Listeners.TodoListener;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /** TodoModel */
 @Entity
 @Table(name = "todo")
+@EntityListeners(TodoListener.class)
 public class TodoModel {
 
   @Id
@@ -31,6 +36,9 @@ public class TodoModel {
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = UserModel.class)
   private int userId;
 
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+
   public TodoModel(String title, String description, boolean completed, int userId) {
     this.title = title;
     this.description = description;
@@ -39,10 +47,6 @@ public class TodoModel {
   }
 
   public TodoModel() {}
-
-  public int getId() {
-    return id;
-  }
 
   public void setId(int id) {
     this.id = id;
@@ -79,4 +83,24 @@ public class TodoModel {
   public void setUserId(int userId) {
     this.userId = userId;
   }
+
+  public int getId() {
+    return id;
+  }
+
+public LocalDateTime getCreatedAt() {
+	return createdAt;
+}
+
+public void setCreatedAt(LocalDateTime createdAt) {
+	this.createdAt = createdAt;
+}
+
+public LocalDateTime getUpdatedAt() {
+	return updatedAt;
+}
+
+public void setUpdatedAt(LocalDateTime updatedAt) {
+	this.updatedAt = updatedAt;
+}
 }

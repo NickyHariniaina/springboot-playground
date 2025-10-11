@@ -2,13 +2,18 @@ package com.todolist.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+
+import com.todolist.model.Listeners.UserListener;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
+@EntityListeners(UserListener.class)
 public class UserModel {
 
   @Id
@@ -17,9 +22,34 @@ public class UserModel {
 
   @Column(nullable = false, unique = true, length = 100)
   private String username;
+
   @Column(nullable = false, unique = true)
   private String email;
+
+  @Column(nullable = false, unique = false)
   private String password;
+
+  @Column(nullable = true, unique = false)
+  private LocalDateTime createdAt;
+
+  @Column(nullable = true, unique = false)
+  private LocalDateTime updatedAt;
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
   public UserModel(String username, String email, String password) {
     this.username = username;
