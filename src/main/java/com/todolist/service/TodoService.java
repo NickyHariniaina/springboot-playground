@@ -26,9 +26,6 @@ public class TodoService {
     return todoRepository.findById(id);
   }
 
-  public Optional<TodoModel> getTodoByUserId(int userId) {
-    return Optional.ofNullable(todoRepository.findByUserId(userId));
-  }
 
   public void deleteTodo(int id) {
     todoRepository.deleteById(id);
