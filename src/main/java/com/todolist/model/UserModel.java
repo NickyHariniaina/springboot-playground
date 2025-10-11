@@ -7,7 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
+
+import org.antlr.v4.runtime.misc.NotNull;
 
 import com.todolist.model.Listeners.UserListener;
 
@@ -21,12 +27,16 @@ public class UserModel {
   private int id;
 
   @Column(nullable = false, unique = true, length = 100)
+  @NotBlank(message = "Username cannot be empty")
+  @Size(min = 8, max = 100, message = "Username should be between 8 and 100 chars.")
   private String username;
 
   @Column(nullable = false, unique = true)
+  @Email
   private String email;
 
   @Column(nullable = false, unique = false)
+  @NotBlank(message = "Password cannot be empty")
   private String password;
 
   @Column(nullable = true, unique = false)

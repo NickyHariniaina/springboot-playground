@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todolist.model.UserModel;
 import com.todolist.service.UserService;
 
+import jakarta.validation.Valid;
+
 /**
  * UserCotrollers
  */
@@ -44,7 +46,7 @@ public class UserCotrollers {
   }
 
   @PostMapping
-  public ResponseEntity<?> createUser(@RequestBody UserModel user) {
+  public ResponseEntity<?> createUser(@Valid @RequestBody UserModel user) {
     try {
       UserModel createdUser = userService.createUser(user);
       return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
