@@ -9,6 +9,4 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.TYPE, ElementType.CONSTRUCTOR, ElementType.METHOD})
-public @interface MyGenerated {
-
-}
+public @interface MyGenerated {}
