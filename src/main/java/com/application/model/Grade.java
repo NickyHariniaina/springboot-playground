@@ -34,7 +34,7 @@ public class Grade {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id;
+  private int id;
 
   @ManyToOne
   @JoinColumn(name = "student_id", updatable = false)

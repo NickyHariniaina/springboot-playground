@@ -1,10 +1,12 @@
 package com.application.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
@@ -36,7 +38,7 @@ public class Course implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id;
+  private int id;
 
   private String code;
 
@@ -48,7 +50,7 @@ public class Course implements Serializable {
 
   @EqualsAndHashCode.Exclude @Builder.Default private boolean is_deleted = false;
 
-  @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+  @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
   @ToString.Exclude
   private List<User> students;
 
