@@ -1,12 +1,13 @@
-package com.todolist;
+package com.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class App {
-
+@SuppressWarnings("all")
+public class MyApplication {
   public static void main(String[] args) {
-    SpringApplication.run(App.class, args);
+    System.out.println("we are running our new app.");
+    SpringApplication.run(MyApplication.class, args);
   }
 }
