@@ -14,6 +14,6 @@ public class GroupDto {
   private String ref;
 
   public static GroupDto from(Group group) {
-    return GroupDto.builder().id(group.getId()).name(group.getName()).ref(group.getRef());
+    return GroupDto.builder().id(group.getId()).name(group.getName()).ref(group.getRef()).build();
   }
 }

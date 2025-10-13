@@ -15,6 +15,6 @@ public class GradeDto {
   private User user;
 
   public static GradeDto from(Grade grade) {
-    return GradeDto.builder().id(grade.getId()).user(grade.getUser());
+    return GradeDto.builder().id(grade.getId()).user(grade.getUser()).build();
   }
 }

@@ -1,7 +1,6 @@
 package com.application.model.DTO;
 
 import com.application.model.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,12 +17,13 @@ public class UserDto {
   private String email;
   private String ref;
 
-  public static User from(User user) {
-    return UserDTO.builder()
+  public static UserDto from(User user) {
+    return UserDto.builder()
         .id(user.getId())
-        .firstname(user.getFirstname)
-        .lastname(user.getLastname)
-        .email(user.getEmail)
-        .ref(user.getRef);
+        .firstname(user.getFirstname())
+        .lastname(user.getLastname())
+        .email(user.getEmail())
+        .ref(user.getRef())
+        .build();
   }
 }

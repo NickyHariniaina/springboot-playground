@@ -37,7 +37,7 @@ import org.hibernate.annotations.Where;
 public class Course implements Serializable {
 
   @Id
-  private int id;
+  private String id;
 
   private String code;
 
