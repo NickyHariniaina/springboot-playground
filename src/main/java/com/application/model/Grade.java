@@ -33,8 +33,7 @@ import lombok.Setter;
 public class Grade {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private String id;
 
   @ManyToOne
   @JoinColumn(name = "student_id", updatable = false)

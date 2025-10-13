@@ -1,6 +1,5 @@
 package com.application.model;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,7 +24,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -41,6 +37,7 @@ import org.hibernate.type.SqlTypes;
 @Table(name = "\"user\"")
 @Getter
 @Setter
+@SuppressWarnings(value = "all")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -49,8 +46,7 @@ import org.hibernate.type.SqlTypes;
 public class User implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private String id;
 
   @NotBlank(message = "firstname is mandatory.")
   private String firstname;
@@ -75,7 +71,10 @@ public class User implements Serializable {
   @UpdateTimestamp private Instant lastUpdateDatetime;
 
   @ManyToMany
-  @JoinTable(name = "courses_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+  @JoinTable(
+      name = "courses_users",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "course_id"))
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
   private List<Course> courses;

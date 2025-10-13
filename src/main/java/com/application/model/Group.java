@@ -30,8 +30,7 @@ import org.hibernate.annotations.Where;
 public class Group implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private String id;
 
   private String name;
   private String ref;

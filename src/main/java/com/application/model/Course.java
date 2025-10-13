@@ -37,7 +37,6 @@ import org.hibernate.annotations.Where;
 public class Course implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   private String code;
