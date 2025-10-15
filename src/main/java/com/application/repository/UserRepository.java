@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, String> {
       @Param("student_status") User.Status status, @Param("student_sex") User.Sex sex, Pageable pageable);
 
   List<User> findAllByUsernameStartingWith(String username, Pageable pageable);
+
+  List<User> findAllByGroupId(String groupId, Pageable pageable);
 }

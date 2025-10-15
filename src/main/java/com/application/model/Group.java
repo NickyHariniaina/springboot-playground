@@ -1,10 +1,14 @@
 package com.application.model;
 
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +41,10 @@ public class Group implements Serializable {
   @EqualsAndHashCode.Exclude private Instant creationDatetime;
 
   @EqualsAndHashCode.Exclude @Builder.Default private boolean is_deleted = false;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+  public List<User> users;
+
 
   @PrePersist
   public void initializeCreationDatetime(Group group) {
