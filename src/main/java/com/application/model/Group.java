@@ -1,5 +1,6 @@
 package com.application.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -19,6 +20,8 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** Group */
 @Getter
@@ -42,7 +45,8 @@ public class Group implements Serializable {
 
   @EqualsAndHashCode.Exclude @Builder.Default private boolean is_deleted = false;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+  @JsonIgnore
   public List<User> users;
 
 

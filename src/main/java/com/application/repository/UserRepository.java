@@ -31,4 +31,6 @@ public interface UserRepository extends JpaRepository<User, String> {
   List<User> findAllByUsernameStartingWith(String username, Pageable pageable);
 
   List<User> findAllByGroupId(String groupId, Pageable pageable);
+
+  List<User> findAllByGroupIdAndSex(String groupId, User.Sex sex, Pageable pageable);
 }

@@ -94,7 +94,7 @@ public class User implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "group_id")
-  public Group group;
+  private Group group;
 
   @Override
   public boolean equals(Object o) {
