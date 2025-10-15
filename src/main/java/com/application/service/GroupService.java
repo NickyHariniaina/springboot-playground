@@ -6,7 +6,6 @@ import com.application.model.exception.NotFoundException;
 import com.application.repository.GroupRepository;
 import com.application.repository.UserRepository;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -44,18 +43,17 @@ public class GroupService {
     }
   }
 
-    @Transactional
-    public void deleteGroup(String id, String newGroupForTransfertId) {
-    Optional<Group> groupById = groupRepository.findById(id);
-    Optional<Group> groupByNewId = groupRepository.findById(newGroupForTransfertId);
-    if (groupById.isPresent() && groupByNewId.isPresent()) {
-      for (User user: groupById.get().getUsers()) {
-        user.setGroup(groupByNewId.get());
-        userRepository.save(user);
-      }
-      groupRepository.deleteById(id);
-    } else {
-      throw new NotFoundException("Group not found");
+  @Transactional
+  public void deleteGroup(String id, String newGroupForTransfertId) {
+    Group groupById =
+        groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Group not found"));
+    Group groupByNewId =
+        groupRepository
+            .findById(newGroupForTransfertId)
+            .orElseThrow(() -> new NotFoundException("Group not found"));
+    for (User user : groupById.getUsers()) {
+      user.setGroup(groupByNewId.get());
     }
+    groupRepository.delete(groupById);
   }
 }

@@ -1,8 +1,13 @@
 package com.application.service;
 
 import com.application.model.User;
+import com.application.model.Group;
 import com.application.model.exception.NotFoundException;
+import com.application.repository.GroupRepository;
 import com.application.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -14,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private UserRepository userRepository;
+  private GroupRepository groupRepository;
+
 
   public Optional<User> getUserById(String id) {
     return userRepository.findById(id);
@@ -77,6 +84,15 @@ public class UserService {
 
   public List<User> getAllUser() {
     return userRepository.findAll();
+  }
+
+  @Transactional
+  public void insertUserIntoGroup(String groupId, String userId) {
+    Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Group not found."));
+    User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found."));
+
+    user.setGroup(group);
+    group.getUsers().add(user);
   }
 
   public void updateUser(User user) {
