@@ -15,7 +15,7 @@ public interface GroupRepository extends JpaRepository<Group, String> {
   Optional<Group> findById(String id);
 
   @Query(
-      "select g.users from \"group\" g inner join \"user\" u on u.id = g.id where u.status ="
+      "select u from Group g inner join User u  where u.status ="
           + " :student_status and g.name = :group_name")
   List<User> findByUserStatus(
       @Param("student_status") User.Status status, @Param("group_name") String groupName);

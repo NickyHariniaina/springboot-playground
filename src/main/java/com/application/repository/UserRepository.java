@@ -24,11 +24,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 
   List<User> findAllByStatus(User.Status status, Pageable pageable);
 
-  @Query("select * from \"user\" u where u.status = :student_status and u.sex = :student_sex")
+  @Query("select u from User u where u.status = :student_status and u.sex = :student_sex")
   List<User> findAllByStatusAndSex(
       @Param("student_status") User.Status status, @Param("student_sex") User.Sex sex, Pageable pageable);
 
-  List<User> findAllByUsernameStartingWith(String username, Pageable pageable);
 
   List<User> findAllByGroupId(String groupId, Pageable pageable);
 

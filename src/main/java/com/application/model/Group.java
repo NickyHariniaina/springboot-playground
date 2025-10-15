@@ -1,6 +1,7 @@
 package com.application.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /** Group */
 @Getter
+@Entity
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -51,8 +53,8 @@ public class Group implements Serializable {
 
 
   @PrePersist
-  public void initializeCreationDatetime(Group group) {
-    group.setCreationDatetime(Instant.now());
+  public void initializeCreationDatetime() {
+    this.setCreationDatetime(Instant.now());
   }
 
   @Override

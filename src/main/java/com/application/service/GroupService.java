@@ -9,14 +9,16 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class GroupService {
 
+  @Autowired
   private GroupRepository groupRepository;
-  private UserRepository userRepository;
 
   public Optional<Group> getGroupByName(String name) {
     return groupRepository.findByName(name);
@@ -52,7 +54,7 @@ public class GroupService {
             .findById(newGroupForTransfertId)
             .orElseThrow(() -> new NotFoundException("Group not found"));
     for (User user : groupById.getUsers()) {
-      user.setGroup(groupByNewId.get());
+      user.setGroup(groupByNewId);
     }
     groupRepository.delete(groupById);
   }
