@@ -21,6 +21,6 @@ public class CourseDto {
         .id(course.getId())
         .name(course.getName())
         .credits(course.getCredits())
-        .totalHours(course.getTotalHours());
+        .totalHours(course.getTotalHours()).build();
   }
 }

@@ -24,7 +24,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "\"grade\"")
-@Builder(toBuilder = true)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
