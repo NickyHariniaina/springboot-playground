@@ -1,10 +1,16 @@
 package com.application.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +22,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /** Group */
 @Getter
+@Entity
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,9 +47,14 @@ public class Group implements Serializable {
 
   @EqualsAndHashCode.Exclude @Builder.Default private boolean is_deleted = false;
 
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+  @JsonIgnore
+  public List<User> users;
+
+
   @PrePersist
-  public void initializeCreationDatetime(Group group) {
-    group.setCreationDatetime(Instant.now());
+  public void initializeCreationDatetime() {
+    this.setCreationDatetime(Instant.now());
   }
 
   @Override

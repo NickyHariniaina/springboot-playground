@@ -3,12 +3,14 @@ package com.application.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,6 +34,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.hibernate.type.SqlTypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Builder
 @Table(name = "\"user\"")
@@ -46,20 +50,17 @@ import org.hibernate.type.SqlTypes;
 public class User implements Serializable {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "firstname is mandatory.")
   private String firstname;
 
   private String lastname;
 
-  @NotBlank(message = "reference is mandatory.")
   private String ref;
 
   private String phone;
 
-  @NotBlank(message = "email is mandatory.")
-  @Email(message = "email must be valid.")
   private String email;
 
   @EqualsAndHashCode.Exclude @Builder.Default private boolean isDeleted = false;
@@ -76,6 +77,7 @@ public class User implements Serializable {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "course_id"))
   @ToString.Exclude
+  @JsonIgnore
   @EqualsAndHashCode.Exclude
   private List<Course> courses;
 
@@ -89,6 +91,11 @@ public class User implements Serializable {
   @Enumerated(EnumType.STRING)
   @JdbcTypeCode(SqlTypes.NAMED_ENUM)
   private Sex sex;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "group_id")
+  @JsonIgnore
+  private Group group;
 
   @Override
   public boolean equals(Object o) {
