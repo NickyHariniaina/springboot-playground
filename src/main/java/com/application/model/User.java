@@ -33,20 +33,19 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.hibernate.type.SqlTypes;
-
+import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Builder
 @Table(name = "\"user\"")
-@Getter
-@Setter
 @SuppressWarnings(value = "all")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @SQLDelete(sql = "update \"user\" set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
+@Data
 public class User implements Serializable {
 
   @Id
