@@ -11,6 +11,5 @@ public class MyApplication {
   public static void main(String[] args) {
     System.out.println("we are running our new app.");
     SpringApplication.run(MyApplication.class, args);
-    User user = User.builder();
   }
 }
