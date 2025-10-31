@@ -44,10 +44,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Builder
 @Table(name = "\"user\"")
-@SuppressWarnings(value = "all")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @SQLDelete(sql = "update \"user\" set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
 @Data
@@ -59,6 +57,7 @@ public class User implements Serializable, UserDetails {
 
   private String username;
   private String password;
+  @NotBlank(message = "Role is required")
   private String role;
 
   private String firstname;
