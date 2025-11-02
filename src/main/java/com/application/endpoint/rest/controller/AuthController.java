@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +29,10 @@ public class AuthController {
   public ResponseEntity<String> login(@RequestBody LoginBody body) {
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
         new UsernamePasswordAuthenticationToken(body.username(), body.password());
-    authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-    return ResponseEntity.ok("Login Successful");
+    Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+    UserDetails authUser = (UserDetails) authentication.getPrincipal();
+    String token = jwtService.generateToken(authUser);
+    return ResponseEntity.status(200).body(token);
   }
 
   @PostMapping("/register")
