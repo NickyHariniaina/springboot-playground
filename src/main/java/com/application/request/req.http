@@ -1,3 +1,6 @@
+@token =
+
+### Login
 POST http://localhost:8080/api/public/auth/login
 Content-Type: application/json
 
@@ -6,7 +9,7 @@ Content-Type: application/json
     "password": "123456"
 }
 
-###
+### Register
 POST http://localhost:8080/api/public/auth/register
 Content-Type: application/json
 

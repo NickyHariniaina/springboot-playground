@@ -1,6 +1,7 @@
 package com.application.endpoint.rest.controller;
 
 import com.application.model.User;
+import com.application.service.JwtService;
 import com.application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+  private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
@@ -43,8 +45,10 @@ public class AuthController {
             .status(User.Status.ENABLED)
             .build();
 
+    String token = jwtService.generateToken(user);
+
     userService.createUser(user);
-    return ResponseEntity.ok("Register Successful");
+    return ResponseEntity.status(201).body(token);
   }
 
   private static record LoginBody(String username, String password) {}
