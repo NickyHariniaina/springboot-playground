@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-/** UserRepository */
 public interface UserRepository extends JpaRepository<User, String> {
 
   Optional<User> findById(String id);
@@ -21,6 +20,8 @@ public interface UserRepository extends JpaRepository<User, String> {
   Optional<User> findByFirstname(String firstname);
 
   Optional<User> findByLastname(String lastname);
+
+  Optional<User> findByUsername(String username);
 
   List<User> findAllByStatus(User.Status status, Pageable pageable);
 

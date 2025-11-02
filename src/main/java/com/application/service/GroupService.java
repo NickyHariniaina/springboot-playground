@@ -4,7 +4,6 @@ import com.application.model.Group;
 import com.application.model.User;
 import com.application.model.exception.NotFoundException;
 import com.application.repository.GroupRepository;
-import com.application.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;

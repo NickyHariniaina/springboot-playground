@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -33,25 +34,31 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.hibernate.type.SqlTypes;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Builder
 @Table(name = "\"user\"")
-@Getter
-@Setter
-@SuppressWarnings(value = "all")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @SQLDelete(sql = "update \"user\" set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
-public class User implements Serializable {
+@Data
+public class User implements Serializable, UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
+
+  private String username;
+  private String password;
+  @NotBlank(message = "Role is required")
+  private String role;
 
   private String firstname;
 
@@ -118,5 +125,40 @@ public class User implements Serializable {
     ENABLED,
     DISABLED,
     SUSPENDED
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(role));
+  }
+
+  @Override
+  public String getPassword() {
+    return password;
+  }
+
+  @Override
+  public String getUsername() {
+    return username;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }

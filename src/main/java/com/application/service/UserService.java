@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class UserService {
 
   @Autowired private UserRepository userRepository;
@@ -22,6 +21,10 @@ public class UserService {
 
   public Optional<User> getUserById(String id) {
     return userRepository.findById(id);
+  }
+
+  public Optional<User> getUserByUsername(String username) {
+    return userRepository.findByUsername(username);
   }
 
   public Optional<User> getUserByEmail(String email) {

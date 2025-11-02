@@ -1,0 +1,59 @@
+package com.application.endpoint.rest.controller;
+
+import com.application.model.User;
+import com.application.service.JwtService;
+import com.application.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/public/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+  private final JwtService jwtService;
+  private final AuthenticationManager authenticationManager;
+  private final UserService userService;
+  private final PasswordEncoder passwordEncoder;
+
+  @PostMapping("/login")
+  public ResponseEntity<String> login(@RequestBody LoginBody body) {
+    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+        new UsernamePasswordAuthenticationToken(body.username(), body.password());
+    Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+    UserDetails authUser = (UserDetails) authentication.getPrincipal();
+    String token = jwtService.generateToken(authUser);
+    return ResponseEntity.status(200).body(token);
+  }
+
+  @PostMapping("/register")
+  public ResponseEntity<String> register(@RequestBody LoginBody body) {
+    if (userService.getUserByUsername(body.username()).isPresent()) {
+      return ResponseEntity.badRequest().body("Username already exists");
+    }
+
+    User user =
+        User.builder()
+            .username(body.username())
+            .password(passwordEncoder.encode(body.password()))
+            .role("ROLE_USER")
+            .status(User.Status.ENABLED)
+            .build();
+
+    String token = jwtService.generateToken(user);
+
+    userService.createUser(user);
+    return ResponseEntity.status(201).body(token);
+  }
+
+  private static record LoginBody(String username, String password) {}
+}
